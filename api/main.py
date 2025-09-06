@@ -10,7 +10,7 @@ from config import FASTAPI_HOST, FASTAPI_PORT
 
 
 app = FastAPI(title="FASTAPI Server")
-app.include_router(asr_router, prefix="/asr", tags=["ASR"])
+app.include_router(asr_router, prefix="/api/asr", tags=["ASR"])
 
 
 
