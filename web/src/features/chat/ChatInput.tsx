@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch } from '@/store'
-import { sendMessage, sendAudioThunk } from './chatSlice'
+import { sendMessage } from './chatSlice'
 import AudioRecorder from './AudioRecorder'
 
 export default function ChatInput() {
@@ -14,14 +14,17 @@ export default function ChatInput() {
   }
 
   return (
-    <div className="flex items-center border-t p-2 space-x-2">
+    <div className="flex flex-wrap items-center border-t p-2 gap-2">
       <input
-        className="flex-1 border rounded p-2"
+        className="flex-1 min-w-[120px] border rounded p-2"
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Write message..."
       />
-      <button className="px-3 py-2 bg-blue-500 text-white rounded" onClick={onSend}>
+      <button
+        className="px-3 py-2 bg-blue-500 text-white rounded flex-shrink-0"
+        onClick={onSend}
+      >
         Send
       </button>
       <AudioRecorder />

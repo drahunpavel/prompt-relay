@@ -42,10 +42,10 @@ export default function AudioRecorder() {
   };
 
   return (
-    <div>
+    <div className="flex flex-wrap gap-2">
       <button
         onClick={recording ? stopRecording : startRecording}
-        className="px-3 py-2 bg-green-500 text-white rounded"
+        className="px-3 py-2 bg-green-500 text-white rounded flex-shrink-0"
       >
         {recording ? "Stop" : "Record"}
       </button>
@@ -57,10 +57,10 @@ export default function AudioRecorder() {
         onChange={pickFile}
       />
       <button
-        className="ml-2 px-3 py-2 bg-gray-300 rounded"
+        className="px-3 py-2 bg-gray-300 rounded flex-shrink-0"
         onClick={() => fileInput.current?.click()}
       >
-        Download audio
+        Upload
       </button>
     </div>
   );
