@@ -51,6 +51,11 @@ async def handle_voice(message: types.Message, bot):
     await message.answer(f"{result.get('text', '')}")
 
 
+@router.message(lambda msg: msg.video_note or msg.video)
+async def handle_video(message: types.Message):
+    """handle video"""
+    await message.answer("Video is not supported")
+
 @router.message(Command("help"))
 async def cmd_battle_help(message:  types.Message):
     """handle /help"""
