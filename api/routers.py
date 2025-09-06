@@ -2,7 +2,7 @@
 
 import tempfile
 import shutil
-from fastapi import APIRouter, File, Form, UploadFile
+from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 
 from asr.convert import to_wav_16k_mono
@@ -12,6 +12,7 @@ transcriber = Transcriber(model_size='small')
 
 router = APIRouter()
 
+
 @router.post("/transcribe")
 async def transcribe_endpoint(
     audio: UploadFile = File(...),
@@ -19,7 +20,7 @@ async def transcribe_endpoint(
     # language: str | None = Form(None)
 ):
     """transcribe endpoint"""
-    
+
     with tempfile.TemporaryDirectory() as tmpdir:
         input_path = f"{tmpdir}/input"
         output_wav_path = f"{tmpdir}/output.wav"

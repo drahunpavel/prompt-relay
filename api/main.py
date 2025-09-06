@@ -1,15 +1,13 @@
 """FASTAPI server"""
 
-import os
 from fastapi import FastAPI
 import uvicorn
-from dotenv import load_dotenv
-load_dotenv()
+
 
 from api.routers import router as asr_router
+from config import FASTAPI_HOST, FASTAPI_PORT
 
-FASTAPI_HOST = os.getenv('FASTAPI_HOST')
-FASTAPI_PORT = int(os.getenv('FASTAPI_PORT'))
+
 
 app = FastAPI(title="FASTAPI Server")
 app.include_router(asr_router, prefix="/asr", tags=["ASR"])

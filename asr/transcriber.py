@@ -7,7 +7,7 @@ class Transcriber:
     """Minimum ASR layer"""
 
     def __init__(self,
-                #  tiny, base, small, medium, large-v2, large-v3 
+                 #  tiny, base, small, medium, large-v2, large-v3
                  model_size="large-v3",
                  device="cpu",  # cuda | auto
                  compute_type="int8"
@@ -23,13 +23,14 @@ class Transcriber:
         task: str = "transcribe",  # transcribe | translate
         language: str | None = None  # ru | en
     ):
+        """transcribe """
         start = time.time()
-        
+
         segments, info = self.model.transcribe(
             wav_path,
             task=task,
             language=language,
-            vad_filter=True, # Voice Activity Detection
+            vad_filter=True,  # Voice Activity Detection
             vad_parameters={"min_silence_duration_ms": 500},
             condition_on_previous_text=False
         )
