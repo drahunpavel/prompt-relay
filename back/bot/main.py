@@ -2,16 +2,14 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 
-from bot import handlers
-
-from config import TELEGRAM_BOT_TOKEN
+from . import handlers
+from .config import TELEGRAM_BOT_TOKEN
 
 
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
 dp = Dispatcher()
 
 dp.include_router(handlers.router)
-
 
 async def main():
     """Run tg-bot"""

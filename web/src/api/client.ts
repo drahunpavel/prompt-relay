@@ -15,7 +15,7 @@ export async function transcribeAudio(file: File): Promise<TranscribeResult> {
   const formData = new FormData();
   formData.append("audio", file, file.name);
 
-  const res = await fetch(`/api/asr/transcribe`, {
+  const res = await fetch(`/api/ui/transcribe`, {
     method: "POST",
     body: formData,
   });

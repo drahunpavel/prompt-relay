@@ -2,34 +2,32 @@
 
 import tempfile
 import shutil
+import httpx
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 
-from asr.convert import to_wav_16k_mono
-from asr.transcriber import Transcriber
-
-transcriber = Transcriber(model_size='small')
+from .config import API_TRANSCRIBE_URL
 
 router = APIRouter()
 
 
 @router.post("/transcribe")
 async def transcribe_endpoint(
-    audio: UploadFile = File(...),
+        audio: UploadFile = File(...),
     # task: str = Form("transcribe"),
     # language: str | None = Form(None)
 ):
-    """transcribe endpoint"""
+    """Proxy to ASR service"""
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        input_path = f"{tmpdir}/input"
-        output_wav_path = f"{tmpdir}/output.wav"
+        tmp_path = f"{tmpdir}/{audio.filename}"
 
-        with open(input_path, "wb") as f:
+        with open(tmp_path, "wb") as f:
             shutil.copyfileobj(audio.file, f)
 
-        to_wav_16k_mono(input_path, output_wav_path)
+        async with httpx.AsyncClient() as client:
+            with open(tmp_path, "rb") as f:
+                files = {"audio": (audio.filename, f, audio.content_type)}
+                resp = await client.post(API_TRANSCRIBE_URL, files=files)
 
-        result = transcriber.transcribe(output_wav_path)
-
-    return JSONResponse(result)
+        return JSONResponse(resp.json())

@@ -1,0 +1,45 @@
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: back/api/Dockerfile
+    container_name: prompt-relay-api
+    env_file:
+      - back/api/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - asr
+
+  asr:
+    build:
+      context: .
+      dockerfile: back/asr/Dockerfile
+    container_name: prompt-relay-asr
+    env_file:
+      - back/asr/.env
+    ports:
+      - "8001:8001"
+
+  bot:
+    build:
+      context: .
+      dockerfile: back/bot/Dockerfile
+    container_name: prompt-relay-bot
+    # volumes:
+    #   - ./back:/app
+    env_file:
+      - back/bot/.env
+    depends_on:
+      - asr
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    container_name: prompt-relay-web
+    ports:
+      - "80:80"
+    depends_on:
+      - api

@@ -1,10 +1,12 @@
 """Tg-bot handlers"""
 
+
 from aiogram import Router, types
 from aiogram.filters import CommandStart, Command
 import aiohttp
 
-from config import API_TRANSCRIBE_URL, TELEGRAM_BOT_TOKEN
+from .config import TELEGRAM_BOT_TOKEN, API_TRANSCRIBE_URL
+
 
 router = Router()
 
@@ -55,6 +57,7 @@ async def handle_voice(message: types.Message, bot):
 async def handle_video(message: types.Message):
     """handle video"""
     await message.answer("Video is not supported")
+
 
 @router.message(Command("help"))
 async def cmd_battle_help(message:  types.Message):
